@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phone AR Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/1.4.2/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ar.js/2.2.2/aframe-ar.min.js"></script>
+    <style>
+        .instructions {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body style="margin: 0;">
+    <div class="instructions">
+        කැමරාව QR කේතය වෙත එල්ල කරන්න
+    </div>
+    
+    <div class="loading" id="loading">
+        කරුණාකර රැඳී සිටින්න...
+    </div>
+
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix;">
+        <a-marker preset="hiro">
+            <!-- RAM model -->
+            <a-box position="0 0.5 0" 
+                   material="color: #4285f4"
+                   scale="1 0.1 0.5"
+                   animation="property: rotation; to: 0 360 0; dur: 5000; loop: true">
+                <a-text value="RAM" position="0 0.5 0" align="center" color="#ffffff"></a-text>
+            </a-box>
+        </a-marker>
+
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+        // Show loading message when starting
+        window.addEventListener('load', function() {
+            document.getElementById('loading').style.display = 'block';
+            
+            // Hide loading message after camera starts
+            setTimeout(function() {
+                document.getElementById('loading').style.display = 'none';
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
